@@ -1,3 +1,7 @@
+"""
+Author: Samuel Schmidgall
+Institution: Johns Hopkins University
+"""
 
 from typing import Optional
 
