@@ -50,6 +50,12 @@ class ECMTask(RLTask):
             self._num_actions = 6
             self._num_observations = 24
             self._ball_position = torch.tensor([0.2, 0, 0.5])#.to(self._device)
+        if self.task_id == "target_reach":
+            self.dt = 0.005
+            self.decimation = 2
+            self._num_actions = 6
+            self._num_observations = 24
+            self._ball_position = torch.tensor([0.2, 0, 0.5])#.to(self._device)
 
         RLTask.__init__(self, name, env)
 
