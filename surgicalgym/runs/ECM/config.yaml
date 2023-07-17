@@ -1,0 +1,176 @@
+task:
+  name: ECM
+  physics_engine: ${..physics_engine}
+  env:
+    numEnvs: 16
+    envSpacing: 1.5
+    episodeLength: 100
+    actionScale: 1.0
+    clipObservations: 5.0
+    clipActions: 1.0
+    useRelativeControl: false
+    dofSpeedScale: 20.0
+    actionsMovingAverage: 1.0
+    controlFrequencyInv: 2
+    startPositionNoise: 0.01
+    startRotationNoise: 0.0
+    resetPositionNoise: 0.01
+    resetRotationNoise: 0.0
+    resetDofPosRandomInterval: 0.2
+    resetDofVelRandomInterval: 0.0
+    forceScale: 0.0
+    forceProbRange:
+    - 0.001
+    - 0.1
+    forceDecay: 0.99
+    forceDecayInterval: 0.08
+    objectType: block
+    observationType: full
+    asymmetric_observations: false
+    successTolerance: 0.1
+    printNumSuccesses: false
+    maxConsecutiveSuccesses: 0
+  sim:
+    dt: 0.005
+    add_ground_plane: true
+    add_distant_light: true
+    use_gpu_pipeline: ${eq:${...pipeline},"gpu"}
+    use_flatcache: true
+    enable_scene_query_support: false
+    disable_contact_processing: false
+    enable_cameras: false
+    default_material:
+      static_friction: 1.0
+      dynamic_friction: 1.0
+      restitution: 0.0
+    physx:
+      use_gpu: ${eq:${....sim_device},"gpu"}
+      worker_thread_count: ${....num_threads}
+      solver_type: ${....solver_type}
+      bounce_threshold_velocity: 0.2
+      friction_offset_threshold: 0.04
+      friction_correlation_distance: 0.025
+      enable_sleeping: true
+      enable_stabilization: true
+      gpu_max_rigid_contact_count: 1048576
+      gpu_max_rigid_patch_count: 33554432
+      gpu_found_lost_pairs_capacity: 20971520
+      gpu_found_lost_aggregate_pairs_capacity: 20971520
+      gpu_total_aggregate_pairs_capacity: 20971520
+      gpu_max_soft_body_contacts: 1048576
+      gpu_max_particle_contacts: 1048576
+      gpu_heap_capacity: 33554432
+      gpu_temp_buffer_capacity: 16777216
+      gpu_max_num_partitions: 8
+    ecm:
+      override_usd_defaults: false
+      enable_self_collisions: true
+      enable_gyroscopic_forces: true
+      solver_position_iteration_count: 8
+      solver_velocity_iteration_count: 0
+      sleep_threshold: 0.005
+      stabilization_threshold: 0.0005
+      density: -1
+      max_depenetration_velocity: 1000.0
+    ball:
+      override_usd_defaults: false
+      make_kinematic: false
+      enable_self_collisions: false
+      enable_gyroscopic_forces: true
+      solver_position_iteration_count: 8
+      solver_velocity_iteration_count: 0
+      sleep_threshold: 0.005
+      stabilization_threshold: 0.0025
+      density: 567.0
+      max_depenetration_velocity: 1000.0
+train:
+  params:
+    seed: ${...seed}
+    algo:
+      name: a2c_continuous
+    model:
+      name: continuous_a2c_logstd
+    network:
+      name: actor_critic
+      separate: false
+      space:
+        continuous:
+          mu_activation: None
+          sigma_activation: None
+          mu_init:
+            name: default
+          sigma_init:
+            name: const_initializer
+            val: 0
+          fixed_sigma: true
+      mlp:
+        units:
+        - 256
+        - 128
+        - 64
+        activation: elu
+        initializer:
+          name: default
+        regularizer:
+          name: None
+    load_checkpoint: ${if:${...checkpoint},True,False}
+    load_path: ${...checkpoint}
+    config:
+      name: ${resolve_default:ECM,${....experiment}}
+      full_experiment_name: ${.name}
+      device: ${....rl_device}
+      device_name: ${....rl_device}
+      env_name: rlgpu
+      multi_gpu: ${....multi_gpu}
+      ppo: true
+      mixed_precision: false
+      normalize_input: true
+      normalize_value: true
+      num_actors: ${....task.env.numEnvs}
+      reward_shaper:
+        scale_value: 0.1
+      normalize_advantage: true
+      gamma: 0.99
+      tau: 0.95
+      learning_rate: 0.0003
+      lr_schedule: adaptive
+      kl_threshold: 0.008
+      score_to_win: 20000
+      max_epochs: ${resolve_default:100,${....max_iterations}}
+      save_best_after: 50
+      save_frequency: 25
+      grad_norm: 1.0
+      entropy_coef: 0.0
+      truncate_grads: true
+      e_clip: 0.2
+      horizon_length: 50
+      minibatch_size: 8000
+      mini_epochs: 8
+      critic_coef: 4
+      clip_value: true
+      seq_len: 4
+      bounds_loss_coef: 0.0001
+task_name: ${task.name}
+experiment: ''
+num_envs: ''
+seed: 42
+torch_deterministic: false
+max_iterations: ''
+physics_engine: physx
+pipeline: gpu
+sim_device: gpu
+device_id: 0
+rl_device: cuda:0
+multi_gpu: false
+num_threads: 4
+solver_type: 1
+test: false
+checkpoint: ''
+headless: true
+enable_livestream: false
+mt_timeout: 30
+wandb_activate: false
+wandb_group: ''
+wandb_name: ${train.params.config.name}
+wandb_entity: ''
+wandb_project: omniisaacgymenvs

@@ -1,0 +1,13 @@
+Metadata-Version: 1.1
+Name: omniisaacgymenvs
+Version: 2022.2.1.0
+Summary: RL environments for robot learning in NVIDIA Isaac Sim.
+Home-page: UNKNOWN
+Author: NVIDIA
+Author-email: UNKNOWN
+License: UNKNOWN
+Description: UNKNOWN
+Keywords: robotics,rl
+Platform: UNKNOWN
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3.7, 3.8
