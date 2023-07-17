@@ -44,25 +44,17 @@ class ECMTask(RLTask):
 
         self.distX_offset = 0.04
 
-        if self.task_id == "target_reach":
+        if self.task_id in ["active_tracking", "target_reach"]:
             self.dt = 0.005
             self.decimation = 2
             self._num_actions = 6
             self._num_observations = 24
-            self._ball_position = torch.tensor([0.2, 0, 0.5])#.to(self._device)
-        if self.task_id == "target_reach":
-            self.dt = 0.005
-            self.decimation = 2
-            self._num_actions = 6
-            self._num_observations = 24
-            self._ball_position = torch.tensor([0.2, 0, 0.5])#.to(self._device)
+            self._ball_position = torch.tensor([0.2, 0, 0.5])
 
         RLTask.__init__(self, name, env)
 
         self.time = 0
         self.env_ids_int32 = torch.arange(self._num_envs, dtype=torch.int32, device=self._device)
-        #self.lower = torch.tensor([-90, -45, -66, -45,  0.0,  -90]).to(self._device)
-        #self.upper = torch.tensor([90,   66,  45,  66,  0.254, 90]).to(self._device)
         self.lower = torch.tensor([-1, -1, -1, -1, -1, -1]).to(self._device)
         self.upper = torch.tensor([ 1,  1,  1,  1,  1,  1]).to(self._device)
 
@@ -76,14 +68,14 @@ class ECMTask(RLTask):
     def set_up_scene(self, scene) -> None:
         self.get_ecm()
 
-        if self.task_id == "target_reach":
+        if self.task_id in ["active_tracking", "target_reach"]:
             self.get_target()
         
         super().set_up_scene(scene)
         
         self._ecms = ECMView(prim_paths_expr="/World/envs/.*/ecm", name="ecm_view")
 
-        if self.task_id == "target_reach":
+        if self.task_id in ["active_tracking", "target_reach"]:
             self._ball_target = RigidPrimView(prim_paths_expr="/World/envs/.*/ball_target")
         
         self._env_indices = torch.arange(self._num_envs, dtype=torch.int64, device=self._device)
@@ -92,7 +84,7 @@ class ECMTask(RLTask):
         scene.add(self._ecms._ecm_end_link)
         scene.add(self._ecms._ecm_tool_link)
 
-        if self.task_id == "target_reach":
+        if self.task_id in ["active_tracking", "target_reach"]:
             scene.add(self._ball_target)
 
         self.init_data()
@@ -108,7 +100,7 @@ class ECMTask(RLTask):
         self.ecm_dof_targets = torch.zeros_like(self.actions)
         self.initial_root_pos, self.initial_root_rot = self._ecms.get_world_poses(clone=False)
         self._ecms.set_joint_position_targets(self.ecm_dof_targets, indices=self._env_indices)
-        if self.task_id == "target_reach":
+        if self.task_id in ["active_tracking", "target_reach"]:
             self.init_ball_pos, self.init_ball_rot = self._ball_target.get_world_poses(clone=False)
             self.init_ball_pos = self.init_ball_pos.clone()
             self.init_ball_pos[:, 2] += 0.5
@@ -118,6 +110,9 @@ class ECMTask(RLTask):
                 self.init_ball_rot, 
                 indices=self._env_indices
             )
+            
+        if self.task_id in ["active_tracking"]:
+            self.ball_momentum = torch.zeros_like(self.ball_offset)
 
         self.ecm_tool_link_pos, self.ecm_tool_link_rot = self._ecms._ecm_tool_link.get_world_poses(clone=False)
         self.ecm_tool_link_tip = self.ecm_tool_link_pos.clone()
@@ -163,7 +158,7 @@ class ECMTask(RLTask):
         self.ecm_tool_link_tip = tip.clone()
 
         #print(self.ecm_dof_pos.cpu().numpy())
-        if self.task_id == "target_reach":
+        if self.task_id in ["active_tracking", "target_reach"]:
             self.obs_buf = torch.cat((
                     self.ecm_dof_pos,
                     self.ecm_dof_vel,
@@ -218,15 +213,26 @@ class ECMTask(RLTask):
             self.reset_buf[reset_env_ids] = 0
             self.progress_buf[reset_env_ids] = 0
             
-            if self.task_id == "target_reach":
+            if self.task_id in ["active_tracking", "target_reach"]:
                 self.ball_offset = torch.randn_like(self.init_ball_pos) * 0.1
                 self._ball_target.set_world_poses(
                     (self.init_ball_pos+self.ball_offset), 
                     self.init_ball_rot, 
                     indices=indices
                 )
+            if self.task_id in ["active_tracking"]:
+                self.ball_momentum = torch.zeros_like(self.ball_offset)
             self.time = 0
-            
+        
+        if self.task_id in ["active_tracking"]:
+            self.ball_momentum = self.ball_momentum + 0.0001*torch.randn_like(self.init_ball_pos)
+            self.ball_offset = torch.clip(self.ball_momentum + self.ball_offset, min=-0.2, max=0.2)
+            self._ball_target.set_world_poses(
+                (self.init_ball_pos+self.ball_offset), 
+                self.init_ball_rot, 
+                indices=self.env_ids_int32
+            )
+
         self.actions = actions.clone().to(self._device)
         for _ in range(self.decimation):
             self.prev_actions = self.actions.clone()
@@ -250,9 +256,7 @@ class ECMTask(RLTask):
         self.reset_idx(indices)
 
     def calculate_metrics(self) -> None:
-        if self.task_id == "target_reach":
-            #print((self.ecm_tool_link_tip - (
-            #        self.init_ball_pos.clone() + self.ball_offset)).cpu().numpy())
+        if self.task_id in ["active_tracking", "target_reach"]:
             self.rew_buf[:] = -abs(
                 self.ecm_tool_link_tip - (
                     self.init_ball_pos.clone() + self.ball_offset)
