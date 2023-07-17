@@ -1,4 +1,4 @@
-# Omniverse Isaac Gym Reinforcement Learning Environments for Isaac Sim
+# Surgical Gym: A high-performance GPU-based platform for surgical robot learning 
 
 ## About this repository
 
@@ -6,17 +6,7 @@ This repository contains Reinforcement Learning examples that can be run with th
 
 Please see [release notes](docs/release_notes.md) for the latest updates.
 
-<img src="https://user-images.githubusercontent.com/34286328/171454189-6afafbff-bb61-4aac-b518-24646007cb9f.gif" width="300" height="150"/>&emsp;<img src="https://user-images.githubusercontent.com/34286328/184172037-cdad9ee8-f705-466f-bbde-3caa6c7dea37.gif" width="300" height="150"/>
-
-<img src="https://user-images.githubusercontent.com/34286328/171454182-0be1b830-bceb-4cfd-93fb-e1eb8871ec68.gif" width="300" height="150"/>&emsp;<img src="https://user-images.githubusercontent.com/34286328/171454193-e027885d-1510-4ef4-b838-06b37f70c1c7.gif" width="300" height="150"/>
-
-<img src="https://user-images.githubusercontent.com/34286328/184174894-03767aa0-936c-4bfe-bbe9-a6865f539bb4.gif" width="300" height="150"/>&emsp;<img src="https://user-images.githubusercontent.com/34286328/184168200-152567a8-3354-4947-9ae0-9443a56fee4c.gif" width="300" height="150"/>
-
-<img src="https://user-images.githubusercontent.com/34286328/184176312-df7d2727-f043-46e3-b537-48a583d321b9.gif" width="300" height="150"/>&emsp;<img src="https://user-images.githubusercontent.com/34286328/184178817-9c4b6b3c-c8a2-41fb-94be-cfc8ece51d5d.gif" width="300" height="150"/>
-
-<img src="https://user-images.githubusercontent.com/34286328/171454160-8cb6739d-162a-4c84-922d-cda04382633f.gif" width="300" height="150"/>&emsp;<img src="https://user-images.githubusercontent.com/34286328/171454176-ce08f6d0-3087-4ecc-9273-7d30d8f73f6d.gif" width="300" height="150"/>
-
-<img src="https://user-images.githubusercontent.com/34286328/184170040-3f76f761-e748-452e-b8c8-3cc1c7c8cb98.gif" width="614" height="307"/>
+<img src="media/target_reach.gif" width="300" height="150"/>&emsp;<img src="https://user-images.githubusercontent.com/34286328/184172037-cdad9ee8-f705-466f-bbde-3caa6c7dea37.gif" width="300" height="150"/>
 
 ## Installation
 
@@ -57,29 +47,22 @@ ERROR: pip's dependency resolver does not currently take into account all the pa
 
 ### Running the examples
 
-*Note: All commands should be executed from `OmniIsaacGymEnvs/omniisaacgymenvs`.*
+*Note: all commands should be executed from `SurgicalGym/surgicalgym`.*
 
 To train your first policy, run:
 
 ```bash
-PYTHON_PATH scripts/rlgames_train.py task=Cartpole
+PYTHON_PATH scripts/rlgames_train.py task=ECM
 ```
 
-You should see an Isaac Sim window pop up. Once Isaac Sim initialization completes, the Cartpole scene will be constructed and simulation will start running automatically. The process will terminate once training finishes.
-
-
-Here's another example - Ant locomotion - using the multi-threaded training script:
-
-```bash
-PYTHON_PATH scripts/rlgames_train_mt.py task=Ant
-```
+You should see an Isaac Sim window pop up. Once Isaac Sim initialization completes, the ECM target reaching scene will be constructed and simulation will start running automatically. The process will terminate once training finishes.
 
 Note that by default, we show a Viewport window with rendering, which slows down training. You can choose to close the Viewport window during training for better performance. The Viewport window can be re-enabled by selecting `Window > Viewport` from the top menu bar.
 
 To achieve maximum performance, you can launch training in `headless` mode as follows:
 
 ```bash
-PYTHON_PATH scripts/rlgames_train.py task=Ant headless=True
+PYTHON_PATH scripts/rlgames_train.py task=ECM headless=True
 ```
 
 #### A Note on the Startup Time of the Simulation
@@ -127,75 +110,6 @@ PYTHON_PATH scripts/rlgames_train.py task=Ant checkpoint=http://omniverse-conten
 ```
 
 When running with a pre-trained checkpoint for the first time, we will automatically download the checkpoint file to `omniisaacgymenvs/checkpoints`. For subsequent runs, we will re-use the file that has already been downloaded, and will not overwrite existing checkpoints with the same name in the `checkpoints` folder.
-
-## Runing from Docker
-
-Latest Isaac Sim Docker image can be found on [NGC](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/isaac-sim). A utility script is provided at `docker/run_docker.sh` to help initialize this repository and launch the Isaac Sim docker container. The script can be run with:
-
-```bash
-./docker/run_docker.sh
-```
-
-Then, training can be launched from the container with:
-
-```bash
-/isaac-sim/python.sh scripts/rlgames_train.py headless=True task=Ant
-```
-
-To run the Isaac Sim docker with UI, use the following script:
-
-```bash
-./docker/run_docker_viewer.sh
-```
-
-Then, training can be launched from the container with:
-
-```bash
-/isaac-sim/python.sh scripts/rlgames_train.py task=Ant
-```
-
-## Livestream
-
-OmniIsaacGymEnvs supports livestream through the [Omniverse Streaming Client](https://docs.omniverse.nvidia.com/app_streaming-client/app_streaming-client/overview.html). To enable this feature, add the commandline argument `enable_livestream=True`:
-
-```bash
-PYTHON_PATH scripts/rlgames_train.py task=Ant headless=True enable_livestream=True
-```
-
-Connect from the Omniverse Streaming Client once the SimulationApp has been created. Note that enabling livestream is equivalent to training with the viewer enabled, thus the speed of training/inferencing will decrease compared to running in headless mode.
-
-
-## Training Scripts
-
-All scripts provided in `omniisaacgymenvs/scripts` can be launched directly with `PYTHON_PATH`.
-
-To test out a task without RL in the loop, run the random policy script with:
-
-```bash
-PYTHON_PATH scripts/random_policy.py task=Cartpole
-```
-
-This script will sample random actions from the action space and apply these actions to your task without running any RL policies. Simulation should start automatically after launching the script, and will run indefinitely until terminated.
-
-
-To run a simple form of PPO from `rl_games`, use the single-threaded training script:
-
-```bash
-PYTHON_PATH scripts/rlgames_train.py task=Cartpole
-```
-
-This script creates an instance of the PPO runner in `rl_games` and automatically launches training and simulation. Once training completes (the total number of iterations have been reached), the script will exit. If running inference with `test=True checkpoint=<path/to/checkpoint>`, the script will run indefinitely until terminated. Note that this script will have limitations on interaction with the UI.
-
-
-Lastly, we provide a multi-threaded training script that executes the RL policy on a separate thread than the main thread used for simulation and rendering:
-
-```bash
-PYTHON_PATH scripts/rlgames_train_mt.py task=Cartpole
-```
-
-This script uses the same RL Games PPO policy as the above, but runs the RL loop on a new thread. Communication between the RL thread and the main thread happens on threaded Queues. Simulation will start automatically, but the script will **not** exit when training terminates, except when running in headless mode. Simulation will stop when training completes or can be stopped by clicking on the Stop button in the UI. Training can be launched again by clicking on the Play button. Similarly, if running inference with `test=True checkpoint=<path/to/checkpoint>`, simulation will run until the Stop button is clicked, or the script will run indefinitely until the process is terminated.
-
-
 ### Configuration and command line arguments
 
 We use [Hydra](https://hydra.cc/docs/intro/) to manage the config.
@@ -253,7 +167,7 @@ PYTHON_PATH -m torch.distributed.run --nnodes=1 --nproc_per_node=2 scripts/rlgam
 
 ## Tasks
 
-Source code for tasks can be found in `omniisaacgymenvs/tasks`. 
+Source code for tasks can be found in `SurgicalGym/surgicalgym`. 
 
 Each task follows the frameworks provided in `omni.isaac.core` and `omni.isaac.gym` in Isaac Sim.
 
@@ -261,30 +175,3 @@ Refer to [docs/framework.md](docs/framework.md) for how to create your own tasks
 
 Full details on each of the tasks available can be found in the [RL examples documentation](docs/rl_examples.md).
 
-
-## Demo
-
-We provide an interactable demo based on the `AnymalTerrain` RL example. In this demo, you can click on any of 
-the ANYmals in the scene to go into third-person mode and manually control the robot with your keyboard as follows:
-
-- `Up Arrow`: Forward linear velocity command
-- `Down Arrow`: Backward linear velocity command
-- `Left Arrow`: Leftward linear velocity command
-- `Right Arrow`: Rightward linear velocity command
-- `Z`: Counterclockwise yaw angular velocity command
-- `X`: Clockwise yaw angular velocity command
-- `C`: Toggles camera view between third-person and scene view while maintaining manual control
-- `ESC`: Unselect a selected ANYmal and yields manual control
-
-Launch this demo with the following command. Note that this demo limits the maximum number of ANYmals in the scene to 128.
-
-```
-PYTHON_PATH scripts/rlgames_demo.py task=AnymalTerrain num_envs=64 checkpoint=omniverse://localhost/NVIDIA/Assets/Isaac/2022.2.1/Isaac/Samples/OmniIsaacGymEnvs/Checkpoints/anymal_terrain.pth 
-```
-
-<img src="https://user-images.githubusercontent.com/34286328/184688654-6e7899b2-5847-4184-8944-2a96b129b1ff.gif" width="600" height="300"/>
-
-
-## A note about Force Sensors
-
-Force sensors are supported in Isaac Sim and OIGE via the `ArticulationView` class. Sensor readings can be retrieved using `get_force_sensor_forces()` API, as shown in the Ant/Humanoid Locomotion task, as well as in the Ball Balance task. Please note that there is currently a known bug regarding force sensors in Omniverse Physics. Transforms of force sensors (i.e. their local poses) are set in the actor space of the Articulation instead of the body space, which is the expected behaviour. We will be fixing this in the coming release.
