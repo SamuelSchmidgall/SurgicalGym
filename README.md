@@ -6,7 +6,7 @@ This repository contains Reinforcement Learning examples that can be run with th
 
 Please see [release notes](docs/release_notes.md) for the latest updates.
 
-<img src="media/target_reach.gif" width="300" height="150"/>&emsp;<img src="media/target_reach.gif" width="300" height="150"/>
+<img src="media/target_reach.gif" width="300" height="300"/>
 
 ## Installation
 
