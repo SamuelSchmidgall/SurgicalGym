@@ -15,11 +15,11 @@ from surgicalgym.tasks.utils.usd_utils import set_drive
 from omni.isaac.core.utils.prims import get_prim_at_path
 from pxr import PhysxSchema
 
-class ECM(Robot):
+class PSM(Robot):
     def __init__(
         self,
         prim_path: str,
-        name: Optional[str] = "ecm",
+        name: Optional[str] = "psm",
         usd_path: Optional[str] = None,
         translation: Optional[torch.tensor] = None,
         orientation: Optional[torch.tensor] = None,
@@ -27,14 +27,14 @@ class ECM(Robot):
         self._name = name
         self._usd_path = usd_path
 
-        self._position = torch.tensor([1.0, 0.0, -0.5]) if translation is None else translation
+        self._position = torch.tensor([1.0, 0.0, 0.5]) if translation is None else translation
         self._orientation = torch.tensor([0.0, 0.0, 0.0, 1.0]) if orientation is None else orientation
 
         if self._usd_path is None:
             assets_root_path = get_assets_root_path()
             if assets_root_path is None:
                 carb.log_error("Could not find Isaac Sim assets folder")
-            self._usd_path = "C:/Users/sschmidgall/SurgicalGym/surgicalgym/models/ecm.usd"
+            self._usd_path = "C:/Users/sschmidgall/SurgicalGym/surgicalgym/models/psm.usd"
 
         add_reference_to_stage(self._usd_path, prim_path)
         
@@ -47,18 +47,24 @@ class ECM(Robot):
         )
 
         dof_paths = [
-            "ecm_base_link/ecm_yaw_joint",
-            "ecm_yaw_link/ecm_pitch_front_joint",
-            "ecm_pitch_front_link/ecm_pitch_bottom_joint",
-            "ecm_pitch_bottom_link/ecm_pitch_end_joint",
-            "ecm_pitch_end_link/ecm_main_insertion_joint",
-            "ecm_main_insertion_link/ecm_tool_joint"
+            "psm_base_link/psm_yaw_joint",
+            "psm_yaw_link/psm_pitch_back_joint",
+            "psm_pitch_back_link/psm_pitch_bottom_joint",
+            "psm_pitch_bottom_link/psm_pitch_end_joint",
+            "psm_pitch_end_link/psm_main_insertion_joint",
+            "psm_main_insertion_link/psm_tool_roll_joint",
+            "psm_tool_roll_link/psm_tool_pitch_joint",
+            "psm_tool_pitch_link/psm_tool_yaw_joint",
+            "psm_tool_yaw_link/psm_tool_gripper1_joint",
+            "psm_tool_yaw_link/psm_tool_gripper2_joint",
         ]
-        drive_type = ["angular", "angular", "angular", "angular", "prismatic", "angular"]
-        damping =   [1000,  1000,  1000,  1000,  1e4, 1000]
-        stiffness = [10000, 10000, 10000, 10000, 1e5, 10000]
+        drive_type = ["angular", "angular", "angular", "angular", "prismatic", "angular", "angular", "angular", "angular", "angular"]
+        damping =   [1000 for _ in range(len(dof_paths))]
+        stiffness = [10000 for _ in range(len(dof_paths))]
+        damping[4] = 10
+        stiffness[4] = 1000
         for i, dof in enumerate(dof_paths):
-            #print(self.prim_path, dof)
+            print(dof)
             set_drive(
                 prim_path=f"{self.prim_path}/{dof}",
                 drive_type=drive_type[i],
@@ -68,7 +74,3 @@ class ECM(Robot):
                 damping=damping[i],
                 max_force=10e7
             )
-            #PhysxSchema.PhysxJointAPI(get_prim_at_path(f"{self.prim_path}/{dof}")).CreateMaxJointVelocityAttr().Set(max_velocity[i])
-        
-        #default_dof_pos = [0.0,0.0,0.0,0.0,0.0,0.0]?
-        #max_forces = [1000, 1000, 1000, 1000, 50, 1000]?

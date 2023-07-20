@@ -5,7 +5,7 @@ task:
     numEnvs: ${resolve_default:4096,${...num_envs}}
     envSpacing: 1.5
     episodeLength: 400
-    actionScale: 2.0
+    actionScale: 1.0
     task: target_reach
     forceScale: 0.0
     forceProbRange:
@@ -20,7 +20,7 @@ task:
     printNumSuccesses: false
     maxConsecutiveSuccesses: 0
   sim:
-    dt: 0.005
+    dt: 0.0025
     add_ground_plane: true
     add_distant_light: true
     use_gpu_pipeline: ${eq:${...pipeline},"gpu"}
@@ -105,7 +105,7 @@ train:
     load_checkpoint: ${if:${...checkpoint},True,False}
     load_path: ${...checkpoint}
     config:
-      name: ${resolve_default:ECM,${....experiment}}
+      name: ${resolve_default:PSM,${....experiment}}
       full_experiment_name: ${.name}
       device: ${....rl_device}
       device_name: ${....rl_device}
@@ -154,7 +154,7 @@ multi_gpu: false
 num_threads: 4
 solver_type: 1
 test: true
-checkpoint: C:\Users\sschmidgall\SurgicalGym\surgicalgym\runs\ECM\nn\ECM.pth
+checkpoint: C:\Users\sschmidgall\SurgicalGym\surgicalgym\runs\PSM\nn\PSM.pth
 headless: false
 enable_livestream: false
 mt_timeout: 30
