@@ -2,12 +2,21 @@
 
 ## About this repository
 
-This repository contains Reinforcement Learning examples that can be run with the latest release of [Isaac Sim](https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/overview.html). RL examples are trained using PPO from [rl_games](https://github.com/Denys88/rl_games) library and examples are built on top of Isaac Sim's `omni.isaac.core` and `omni.isaac.gym` frameworks.
+This repository contains Surgical Robotic Learning tasks that can be run with the latest release of [Isaac Sim](https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/overview.html). Reinforcement Learning (RL) examples are trained using PPO from [rl_games](https://github.com/Denys88/rl_games) library and examples are built on top of Isaac Sim's `omni.isaac.core` and `omni.isaac.gym` frameworks. The environment design structure inherits from [OmniIsaacGymEnvs](https://github.com/NVIDIA-Omniverse/OmniIsaacGymEnvs).
 
-Please see [release notes](docs/release_notes.md) for the latest updates.
+## Environments
 
-<img src="media/ecm_target_reach.gif" width="600" height="300"/>
-<img src="media/psm_target_reach.gif" width="600" height="300"/>
+### Endoscopic Camera Manipulator (ECM) 
+-------
+
+<img src="media/ecm_target_reach.gif" width="500" height="250"/>
+
+
+
+### Patient Side Manipulator (PSM)
+-------
+
+<img src="media/psm_target_reach.gif" width="500" height="250"/>
 
 ## Installation
 
