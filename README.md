@@ -8,6 +8,18 @@ This repository contains Surgical Robotic Learning tasks that can be run with th
 
 ## Environments
 
+### The da Vinci System
+
+The da Vinci Surgical System is a robotic surgical system designed to facilitate complex surgery using a minimally invasive. 
+
+
+<img src="media/davinci.jpeg" width="500" height="250"/>
+
+The system operates through an interface with the Master Tool Manipulator (MTM), which serves as the control center for the surgeon to direct surgical actions. Through the MTM's handles or joysticks, the surgeon's movements are captured and translated into corresponding motions of the Patient Side Manipulators (PSMs), which are robotic arm attachments responsible for performing the surgery. These PSMs carry out the movements dictated by the surgeon via the MTM, mimicking the surgeon's hand motions with extraordinary precision, allowing for very accurate and less invasive operations. The PSMs are flexible, multi-jointed instruments capable of holding and manipulating surgical tools, adjusting to the unique anatomy and requirements of each procedure.
+
+A third component of the da Vinci system is the Endoscopic Camera Manipulator (ECM). The ECM is another robotic arm attachment that holds and controls the movement of a stereo endoscope, a special camera that provides a high-definition, three-dimensional view of the surgical field. This allows the surgeon, from the control console, to have a detailed and magnified view of the area being operated on, significantly improving precision and control during the surgical procedure.
+
+
 ### Endoscopic Camera Manipulator (ECM) 
 -------
 
