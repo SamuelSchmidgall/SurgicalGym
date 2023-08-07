@@ -21,13 +21,11 @@ A third component of the da Vinci system is the **Endoscopic Camera Manipulator 
 
 
 ### Endoscopic Camera Manipulator (ECM) 
--------
 
 <img src="media/ecm_target_reach.gif" width="500" height="250"/>
 
 
 ### Patient Side Manipulator (PSM)
--------
 
 <img src="media/psm_target_reach.gif" width="500" height="250"/>
 
