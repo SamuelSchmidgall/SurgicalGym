@@ -13,7 +13,7 @@ This repository contains Surgical Robotic Learning tasks that can be run with th
 The da Vinci Surgical System is a robotic surgical system designed to facilitate complex surgery using a minimally invasive. 
 
 
-<img src="media/davinci.jpeg" height="35%" width="35%"/>
+<!--img src="media/davinci.jpeg" height="35%" width="35%"/-->
 
 The system operates through an interface with the Master Tool Manipulator (MTM), which serves as the control center for the surgeon to direct surgical actions. Through the MTM's handles or joysticks, the surgeon's movements are captured and translated into corresponding motions of the Patient Side Manipulators (PSMs), which are robotic arm attachments responsible for performing the surgery. These PSMs carry out the movements dictated by the surgeon via the MTM, mimicking the surgeon's hand motions with extraordinary precision, allowing for very accurate and less invasive operations. The PSMs are flexible, multi-jointed instruments capable of holding and manipulating surgical tools, adjusting to the unique anatomy and requirements of each procedure.
 
