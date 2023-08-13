@@ -1,12 +1,33 @@
 # Surgical Gym: A high-performance GPU-based platform for surgical robot learning 
 
+As the field of medical surgery evolves, one of its most significant breakthroughs is the incorporation of robotic assistance. These surgical robots, operated by surgeons from a control station, have enabled unparalleled precision during surgical procedures. Not only do these robots mimic the surgeon's movements in real-time, but they also neutralize any tremors, ensuring surgical accuracy. Although robots assist in over a million surgical operations annually, their operation remains human-dependent, lacking autonomy. The pursuit of automation in surgical robots promises not just increased efficiency but also reduced surgeon fatigue. Recent applications of Reinforcement Learning (RL) for control strategies indicate a bright future for automated surgery. However, the vast data demands of RL, combined with the absence of inherent domain knowledge, present a challenge for the field. Recently the robotics domain has been revolutionized through the use of GPU-based physics simulators, accessing magnitudes more data than their CPU counterparts. **This library introduces the Surgical Gym, an open-source platform optimized for GPU capabilities which runs XYZx faster than previous surgical simulators.**
+
 ## About this repository
 
-This repository contains Reinforcement Learning examples that can be run with the latest release of [Isaac Sim](https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/overview.html). RL examples are trained using PPO from [rl_games](https://github.com/Denys88/rl_games) library and examples are built on top of Isaac Sim's `omni.isaac.core` and `omni.isaac.gym` frameworks.
+This repository contains Surgical Robotic Learning tasks that can be run with the latest release of [Isaac Sim](https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/overview.html). Reinforcement Learning (RL) examples are trained using PPO from [rl_games](https://github.com/Denys88/rl_games) library and examples are built on top of Isaac Sim's `omni.isaac.core` and `omni.isaac.gym` frameworks. The environment design structure and some of the README instructions inherit from [OmniIsaacGymEnvs](https://github.com/NVIDIA-Omniverse/OmniIsaacGymEnvs).
 
-Please see [release notes](docs/release_notes.md) for the latest updates.
+## Environments
 
-<img src="media/target_reach.gif" width="600" height="300"/>
+### The da Vinci System
+
+The da Vinci Surgical System is a robotic surgical system designed to facilitate complex surgery using a minimally invasive. 
+
+
+<!--img src="media/davinci.jpeg" height="35%" width="35%"/-->
+
+The system operates through an interface with the **Master Tool Manipulator (MTM)**, which serves as the control center for the surgeon to direct surgical actions. Through the MTM's handles or joysticks, the surgeon's movements are captured and translated into corresponding motions of the **Patient Side Manipulators (PSMs)**, which are robotic arm attachments responsible for performing the surgery. These PSMs carry out the movements dictated by the surgeon via the MTM, mimicking the surgeon's hand motions with extraordinary precision, allowing for very accurate and less invasive operations. The PSMs are flexible, multi-jointed instruments capable of holding and manipulating surgical tools, adjusting to the unique anatomy and requirements of each procedure.
+
+A third component of the da Vinci system is the **Endoscopic Camera Manipulator (ECM)**. The ECM is another robotic arm attachment that holds and controls the movement of a stereo endoscope, a special camera that provides a high-definition, three-dimensional view of the surgical field. This allows the surgeon, from the control console, to have a detailed and magnified view of the area being operated on, significantly improving precision and control during the surgical procedure.
+
+
+### Endoscopic Camera Manipulator (ECM) 
+
+<img src="media/ecm_target_reach.gif" width="500" height="250"/>
+
+
+### Patient Side Manipulator (PSM)
+
+<img src="media/psm_target_reach.gif" width="500" height="250"/>
 
 ## Installation
 
@@ -14,12 +35,12 @@ Follow the Isaac Sim [documentation](https://docs.omniverse.nvidia.com/app_isaac
 
 *Examples in this repository rely on features from the most recent Isaac Sim release. Please make sure to update any existing Isaac Sim build to the latest release version, 2022.2.1, to ensure examples work as expected.*
 
-Once installed, this repository can be used as a python module, `omniisaacgymenvs`, with the python executable provided in Isaac Sim.
+Once installed, this repository can be used as a python module, `SurgicalGym`, with the python executable provided in Isaac Sim.
 
-To install `omniisaacgymenvs`, first clone this repository:
+To install `SurgicalGym`, first clone this repository:
 
 ```bash
-git clone https://github.com/NVIDIA-Omniverse/OmniIsaacGymEnvs.git
+git clone https://github.com/SamuelSchmidgall/SurgicalGym.git
 ```
 
 Once cloned, locate the [python executable in Isaac Sim](https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/install_python.html). By default, this should be `python.sh`. We will refer to this path as `PYTHON_PATH`.
@@ -32,22 +53,15 @@ For Windows: doskey PYTHON_PATH=C:\Users\user\AppData\Local\ov\pkg\isaac_sim-*\p
 For IsaacSim Docker: alias PYTHON_PATH=/isaac-sim/python.sh
 ```
 
-Install `omniisaacgymenvs` as a python module for `PYTHON_PATH`:
+Install `SurgicalGym` as a python module for `PYTHON_PATH`:
 
 ```bash
 PYTHON_PATH -m pip install -e .
 ```
 
-The following error may appear during the initial installation. This error is harmless and can be ignored.
-
-```
-ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
-```
-
-
 ### Running the examples
 
-*Note: all commands should be executed from `SurgicalGym/surgicalgym`.*
+*Note: all commands should be executed from the location `SurgicalGym/surgicalgym`.*
 
 To train your first policy, run:
 
@@ -79,7 +93,7 @@ defaults to the task name, but can also be overridden via the `experiment` argum
 To load a trained checkpoint and continue training, use the `checkpoint` argument:
 
 ```bash
-PYTHON_PATH scripts/rlgames_train.py task=Ant checkpoint=runs/Ant/nn/Ant.pth
+PYTHON_PATH scripts/rlgames_train.py task=ECM checkpoint=runs/ECM/nn/ECM.pth
 ```
 
 To load a trained checkpoint and only perform inference (no training), pass `test=True` 
@@ -87,36 +101,18 @@ as an argument, along with the checkpoint name. To avoid rendering overhead, you
 also want to run with fewer environments using `num_envs=64`:
 
 ```bash
-PYTHON_PATH scripts/rlgames_train.py task=Ant checkpoint=runs/Ant/nn/Ant.pth test=True num_envs=64
+PYTHON_PATH scripts/rlgames_train.py task=ECM checkpoint=runs/ECM/nn/ECM.pth test=True num_envs=64
 ```
 
-Note that if there are special characters such as `[` or `=` in the checkpoint names, 
-you will need to escape them and put quotes around the string. For example,
-`checkpoint="runs/Ant/nn/last_Antep\=501rew\[5981.31\].pth"`
 
-We provide pre-trained checkpoints on the [Nucleus](https://docs.omniverse.nvidia.com/prod_nucleus/prod_nucleus/overview.html) server under `Assets/Isaac/2022.2.1/Isaac/Samples/OmniIsaacGymEnvs/Checkpoints`. Run the following command
-to launch inference with pre-trained checkpoint:
-
-Localhost (To set up localhost, please refer to the [Isaac Sim installation guide](https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/install_basic.html)):
-
-```bash
-PYTHON_PATH scripts/rlgames_train.py task=Ant checkpoint=omniverse://localhost/NVIDIA/Assets/Isaac/2022.2.1/Isaac/Samples/OmniIsaacGymEnvs/Checkpoints/ant.pth test=True num_envs=64
-```
-
-Production server:
-
-```bash
-PYTHON_PATH scripts/rlgames_train.py task=Ant checkpoint=http://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/2022.2.1/Isaac/Samples/OmniIsaacGymEnvs/Checkpoints/ant.pth test=True num_envs=64
-```
-
-When running with a pre-trained checkpoint for the first time, we will automatically download the checkpoint file to `omniisaacgymenvs/checkpoints`. For subsequent runs, we will re-use the file that has already been downloaded, and will not overwrite existing checkpoints with the same name in the `checkpoints` folder.
+When running with a pre-trained checkpoint for the first time, we will automatically download the checkpoint file to `surgicalgym/checkpoints`. For subsequent runs, we will re-use the file that has already been downloaded, and will not overwrite existing checkpoints with the same name in the `checkpoints` folder.
 ### Configuration and command line arguments
 
 We use [Hydra](https://hydra.cc/docs/intro/) to manage the config.
  
 Common arguments for the training scripts are:
 
-* `task=TASK` - Selects which task to use. Any of `AllegroHand`, `Ant`, `Anymal`, `AnymalTerrain`, `BallBalance`, `Cartpole`, `Crazyflie`, `FactoryTaskNutBoltPick`, `FrankaCabinet`, `Humanoid`, `Ingenuity`, `Quadcopter`, `ShadowHand`, `ShadowHandOpenAI_FF`, `ShadowHandOpenAI_LSTM` (these correspond to the config for each environment in the folder `omniisaacgymenvs/cfg/task`)
+* `task=TASK` - Selects which task to use. Any of `@FILL THIS IN ENV1`, `@FILL THIS IN ENV2...` (these correspond to the config for each environment in the folder `surgicalgym/cfg/task`)
 * `train=TRAIN` - Selects which training config to use. Will automatically default to the correct config for the environment (ie. `<TASK>PPO`).
 * `num_envs=NUM_ENVS` - Selects the number of environments to use (overriding the default number of environments set in the task config).
 * `seed=SEED` - Sets a seed value for randomization, and overrides the default seed in the task config
@@ -136,11 +132,11 @@ Hydra also allows setting variables inside config files directly as command line
 
 #### Hydra Notes
 
-Default values for each of these are found in the `omniisaacgymenvs/cfg/config.yaml` file.
+Default values for each of these are found in the `SurgicalGym/cfg/config.yaml` file.
 
 The way that the `task` and `train` portions of the config works are through the use of config groups. 
 You can learn more about how these work [here](https://hydra.cc/docs/tutorials/structured_config/config_groups/)
-The actual configs for `task` are in `omniisaacgymenvs/cfg/task/<TASK>.yaml` and for `train` in `omniisaacgymenvs/cfg/train/<TASK>PPO.yaml`. 
+The actual configs for `task` are in `surgicalgym/cfg/task/<TASK>.yaml` and for `train` in `surgicalgym/cfg/train/<TASK>PPO.yaml`. 
 
 In some places in the config you will find other variables referenced (for example,
  `num_actors: ${....task.env.numEnvs}`). Each `.` represents going one level up in the config hierarchy.
@@ -152,10 +148,6 @@ Tensorboard can be launched during training via the following command:
 ```bash
 PYTHON_PATH -m tensorboard.main --logdir runs/EXPERIMENT_NAME/summaries
 ```
-
-## WandB support
-
-You can run (WandB)[https://wandb.ai/] with OmniIsaacGymEnvs by setting `wandb_activate=True` flag from the command line. You can set the group, name, entity, and project for the run by setting the `wandb_group`, `wandb_name`, `wandb_entity` and `wandb_project` arguments. Make sure you have WandB installed in the Isaac Sim Python executable with `PYTHON_PATH -m pip install wandb` before activating.
 
 
 ## Training with Multiple GPUs
