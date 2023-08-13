@@ -1,11 +1,11 @@
 # used to create the object
-name: PSM
+name: STAR
 
 physics_engine: ${..physics_engine}
 
 # if given, will override the device setting in gym.
 env:
-  numEnvs: ${resolve_default:8,${...num_envs}}
+  numEnvs: ${resolve_default:10000,${...num_envs}}
   envSpacing: 1.5
   episodeLength: 400
   actionScale: 1.0
@@ -65,7 +65,7 @@ sim:
     gpu_temp_buffer_capacity: 16777216
     gpu_max_num_partitions: 8
 
-  psm:
+  star:
     # -1 to use default values
     override_usd_defaults: False
     enable_self_collisions: True

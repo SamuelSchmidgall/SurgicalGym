@@ -15,11 +15,11 @@ from surgicalgym.tasks.utils.usd_utils import set_drive
 from omni.isaac.core.utils.prims import get_prim_at_path
 from pxr import PhysxSchema
 
-class PSM(Robot):
+class STAR(Robot):
     def __init__(
         self,
         prim_path: str,
-        name: Optional[str] = "psm",
+        name: Optional[str] = "star",
         usd_path: Optional[str] = None,
         translation: Optional[torch.tensor] = None,
         orientation: Optional[torch.tensor] = None,
@@ -34,7 +34,7 @@ class PSM(Robot):
             assets_root_path = get_assets_root_path()
             if assets_root_path is None:
                 carb.log_error("Could not find Isaac Sim assets folder")
-            self._usd_path = "C:/Users/sschmidgall/SurgicalGym/surgicalgym/models/psm_ori.usd"
+            self._usd_path = "C:/Users/sschmidgall/SurgicalGym/surgicalgym/models/kuka.usd"
 
         add_reference_to_stage(self._usd_path, prim_path)
         
@@ -47,20 +47,17 @@ class PSM(Robot):
         )
 
         dof_paths = [
-            "psm_base_link/psm_yaw_joint",                  # 0  angular
-            "psm_yaw_link/psm_pitch_back_joint",            # 1  angular
-            "psm_pitch_back_link/psm_pitch_bottom_joint",   # 2  angular
-            "psm_pitch_bottom_link/psm_pitch_end_joint",    # 3  angular
-            "psm_pitch_end_link/psm_main_insertion_joint",  # 4  prismatic
-            "psm_main_insertion_link/psm_tool_roll_joint",  # 5  angular
-            "psm_tool_roll_link/psm_tool_pitch_joint",      # 6  angular
-            "psm_tool_pitch_link/psm_tool_yaw_joint",       # 7  angular
-            "psm_tool_yaw_link/psm_tool_gripper1_joint",    # 8  angular     [0, 60] degrees
-            "psm_tool_yaw_link/psm_tool_gripper2_joint",    # 9  angular     [0, 60] degrees
+            "calib_kuka_arm_base_link/kuka_arm_0_joint", # 0  angular
+            "kuka_arm_1_link/kuka_arm_1_joint",          # 0  angular
+            "kuka_arm_2_link/kuka_arm_2_joint",          # 1  angular
+            "kuka_arm_3_link/kuka_arm_3_joint",          # 2  angular
+            "kuka_arm_4_link/kuka_arm_4_joint",          # 3  angular
+            "kuka_arm_5_link/kuka_arm_5_joint",          # 4  prismatic
+            "kuka_arm_6_link/kuka_arm_6_joint",          # 5  angular
         ]
-        drive_type = ["angular", "angular", "angular", "angular", "prismatic", "angular", "angular", "angular", "angular", "angular"]
-        damping =   [1000 for _ in range(len(dof_paths))]
-        stiffness = [10000 for _ in range(len(dof_paths))]
+        drive_type = ["angular", "angular", "angular", "angular", "angular", "angular", "angular"]
+        damping =   [12 for _ in range(len(dof_paths))]
+        stiffness = [200 for _ in range(len(dof_paths))]
         
         for i, dof in enumerate(dof_paths):
             print(dof)
@@ -71,5 +68,5 @@ class PSM(Robot):
                 target_value=0.0,
                 stiffness=stiffness[i],
                 damping=damping[i],
-                max_force=10e9#7
+                max_force=10e9 #7
             )

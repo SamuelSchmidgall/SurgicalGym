@@ -31,13 +31,15 @@ def initialize_task(config, env, init_sim=True):
     from .config_utils.sim_config import SimConfig
     sim_config = SimConfig(config)
 
-    from surgicalgym.tasks.ecm import ECMTask
-    from surgicalgym.tasks.psm import PSMTask
+    from surgicalgym.tasks.ecm import  ECMTask
+    from surgicalgym.tasks.psm import  PSMTask
+    from surgicalgym.tasks.star import STARTask
     
     # Mappings from strings to environments
     task_map = {
-        "ECM": ECMTask,
-        "PSM": PSMTask,
+        "ECM":  ECMTask,
+        "PSM":  PSMTask,
+        "STAR": STARTask,
     }
 
     cfg = sim_config.config
