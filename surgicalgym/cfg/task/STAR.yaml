@@ -5,12 +5,12 @@ physics_engine: ${..physics_engine}
 
 # if given, will override the device setting in gym.
 env:
-  numEnvs: ${resolve_default:10000,${...num_envs}}
-  envSpacing: 1.5
+  numEnvs: ${resolve_default:2000,${...num_envs}}
+  envSpacing: 2.5
   episodeLength: 400
   actionScale: 1.0
 
-  task: "target_reach" #"target_reach"
+  task: "active_tracking" # target_reach | active_tracking
 
 
   # Random forces applied to the object

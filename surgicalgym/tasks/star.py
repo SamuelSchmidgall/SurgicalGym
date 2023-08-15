@@ -47,27 +47,27 @@ class STARTask(RLTask):
         if self.task_id in ["active_tracking", "target_reach"]:
             self.dt = 0.0025
             self.decimation = 4
-            self._num_actions = 7
-            self._num_observations = 24
-            self._ball_position = torch.tensor([1.5, 0.0, 0.8])
+            self._num_actions = 8
+            self._num_observations = 27
+            self._ball_position = torch.tensor([0.0, 0.0, 0.8])
 
         RLTask.__init__(self, name, env)
 
         self.time = 0
         self.env_ids_int32 = torch.arange(self._num_envs, dtype=torch.int32, device=self._device)
-        self.lower = torch.tensor([-1 for _ in range(7)]).to(self._device)
-        self.upper = torch.tensor([ 1 for _ in range(7)]).to(self._device)
+        self.lower = torch.tensor([-1 for _ in range(8)]).to(self._device)
+        self.upper = torch.tensor([ 1 for _ in range(8)]).to(self._device)
 
         self.scale = torch.tensor(
-            [2.0,  2.0, 2.0, 2.0, 2.0, 2.0, 2.0]
+            [2.0,  2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0]
             ).to(self._device)
         self.offset = torch.tensor(
-            [0.0,  0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+            [0.0,  0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
             ).to(self._device)
         self.scale = self.scale.unsqueeze(0).repeat(self._num_envs, 1)
         self.offset = self.offset.unsqueeze(0).repeat(self._num_envs, 1)
         
-        self.default_pos = torch.tensor([0.0, 0.5, 0.0, -0.5, 0.0, 0.5, 0.0]).to(self._device)
+        self.default_pos = torch.tensor([0.0, 0.3, 0.0, -0.3, 0.0, 0.5, 0.0,  0.0]).to(self._device)
         self.default_pos = self.default_pos.unsqueeze(0).repeat(self._num_envs, 1)
 
         return
@@ -80,7 +80,7 @@ class STARTask(RLTask):
         
         super().set_up_scene(scene)
         
-        self._stars = STARView(prim_paths_expr="/World/envs/.*/kuka_lwr", name="star_view")
+        self._stars = STARView(prim_paths_expr="/World/envs/.*/star_endo360", name="star_view")
 
         if self.task_id in ["active_tracking", "target_reach"]:
             self._ball_target = RigidPrimView(prim_paths_expr="/World/envs/.*/ball_target")
@@ -97,7 +97,7 @@ class STARTask(RLTask):
         return
 
     def get_star(self):
-        star = STAR(prim_path=self.default_zero_env_path + "/kuka_lwr", name="star")
+        star = STAR(prim_path=self.default_zero_env_path + "/star_endo360", name="star")
         self._sim_config.apply_articulation_settings("star", get_prim_at_path(star.prim_path), self._sim_config.parse_actor_config("star"))
 
     def init_data(self) -> None:
@@ -234,7 +234,7 @@ class STARTask(RLTask):
         if self.task_id in ["active_tracking", "target_reach"]:
             self.rew_buf[:] = -abs(
                 self.star_tool_link_tip - (
-                    self.init_ball_pos.clone() + self.ball_offset)).sum(-1)
+                    self.init_ball_pos.clone() + self.ball_offset)).sum(-1) - 0.001*abs(self.star_dof_vel).sum(-1)
 
     def is_done(self) -> None:
         # reset if drawer is open or max length reached

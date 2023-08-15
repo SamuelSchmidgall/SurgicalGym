@@ -34,7 +34,7 @@ class STAR(Robot):
             assets_root_path = get_assets_root_path()
             if assets_root_path is None:
                 carb.log_error("Could not find Isaac Sim assets folder")
-            self._usd_path = "C:/Users/sschmidgall/SurgicalGym/surgicalgym/models/kuka.usd"
+            self._usd_path = "C:/Users/sschmidgall/SurgicalGym/surgicalgym/models/star.usd"
 
         add_reference_to_stage(self._usd_path, prim_path)
         
@@ -47,15 +47,16 @@ class STAR(Robot):
         )
 
         dof_paths = [
-            "calib_kuka_arm_base_link/kuka_arm_0_joint", # 0  angular
-            "kuka_arm_1_link/kuka_arm_1_joint",          # 0  angular
-            "kuka_arm_2_link/kuka_arm_2_joint",          # 1  angular
-            "kuka_arm_3_link/kuka_arm_3_joint",          # 2  angular
-            "kuka_arm_4_link/kuka_arm_4_joint",          # 3  angular
-            "kuka_arm_5_link/kuka_arm_5_joint",          # 4  prismatic
-            "kuka_arm_6_link/kuka_arm_6_joint",          # 5  angular
+            "star_link_0/star_joint_1", # 0  angular
+            "star_link_1/star_joint_2",          # 0  angular
+            "star_link_2/star_joint_3",          # 1  angular
+            "star_link_3/star_joint_4",          # 2  angular
+            "star_link_4/star_joint_5",          # 3  angular
+            "star_link_5/star_joint_6",          # 4  prismatic
+            "star_link_6/star_joint_7",          # 5  angular
+            "endo360_link_0/endo360_joint_1",          # 5  angular
         ]
-        drive_type = ["angular", "angular", "angular", "angular", "angular", "angular", "angular"]
+        drive_type = ["angular", "angular", "angular", "angular", "angular", "angular", "angular", "angular"]
         damping =   [12 for _ in range(len(dof_paths))]
         stiffness = [200 for _ in range(len(dof_paths))]
         
