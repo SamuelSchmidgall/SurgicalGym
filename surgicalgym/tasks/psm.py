@@ -48,7 +48,7 @@ class PSMTask(RLTask):
             self.dt = 0.0025
             self.decimation = 4
             self._num_actions = 9
-            self._num_observations = 39
+            self._num_observations = 37
             self._ball_position = torch.tensor([1.0, -0.5, 0.6])
 
         RLTask.__init__(self, name, env)

@@ -10,7 +10,7 @@ env:
   episodeLength: 400
   actionScale: 2.0
 
-  task: "active_tracking" #"target_reach"
+  task: "target_reach" #"target_reach" active_tracking
 
 
   # Random forces applied to the object
