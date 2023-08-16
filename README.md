@@ -29,6 +29,12 @@ A third component of the da Vinci system is the **Endoscopic Camera Manipulator 
 
 <img src="media/psm_target_reach.gif" width="500" height="250"/>
 
+### Smart Tissue Autonomous Robot (STAR)
+
+The Smart Tissue Autonomous Robot (STAR) is a robot designed by a team of Johns Hopkins University researchers to perform laparoscopic surgery autonomously.
+
+<img src="media/STAR_track.gif" width="500" height="250"/>
+
 ## Installation
 
 Follow the Isaac Sim [documentation](https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/install_basic.html) to install the latest Isaac Sim release. 
