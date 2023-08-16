@@ -246,6 +246,7 @@ class PSMTask(RLTask):
                 scaled_psm_dof_targets, 
                 grippers
             ], dim=1)
+            scaled_psm_dof_targets = torch.clip(scaled_psm_dof_targets, min=-1, max=1)
             self._psms.set_joint_position_targets(scaled_psm_dof_targets, indices=self.env_ids_int32)
         self.time += 1
 
