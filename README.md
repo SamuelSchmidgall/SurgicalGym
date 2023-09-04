@@ -1,6 +1,10 @@
 # Surgical Gym: A high-performance GPU-based platform for surgical robot learning 
 
+<img src="media/mainfigure.jpg" width="80%" height="80%"/>
+
 As the field of medical surgery evolves, one of its most significant breakthroughs is the incorporation of robotic assistance. These surgical robots, operated by surgeons from a control station, have enabled unparalleled precision during surgical procedures. Although robots assist in over a million surgical operations annually, their operation remains human-dependent, lacking autonomy. The pursuit of automation in surgical robots promises increased efficiency, reduced surgeon fatigue, and more minimally-invasive procedures. Recent applications of Reinforcement Learning (RL) for control strategies indicate a bright future for automated surgery. The robotics domain has been recently revolutionized through the use of GPU-based physics simulators, accessing magnitudes more data than their CPU counterparts. Toward this, we introduce  **Surgical Gym:** an open-source platform optimized for GPU capabilities which runs up to 7000x faster than previous surgical simulators.**
+
+
 
 ## About this repository
 
@@ -33,7 +37,7 @@ A third component of the da Vinci system is the **Endoscopic Camera Manipulator 
 
 The Smart Tissue Autonomous Robot (STAR) is a robot designed by a team of Johns Hopkins University researchers to perform laparoscopic surgery autonomously.
 
-<img src="media/STAR_track.gif" width="500" height="250"/>
+<img src="media/STAR_track.gif" width="400" height="250"/>
 
 ## Installation
 
