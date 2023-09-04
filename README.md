@@ -159,7 +159,6 @@ Tensorboard can be launched during training via the following command:
 PYTHON_PATH -m tensorboard.main --logdir runs/EXPERIMENT_NAME/summaries
 ```
 
-
 ## Training with Multiple GPUs
 
 To train with multiple GPUs, use the following command, where `--proc_per_node` represents the number of available GPUs:
@@ -167,13 +166,4 @@ To train with multiple GPUs, use the following command, where `--proc_per_node` 
 PYTHON_PATH -m torch.distributed.run --nnodes=1 --nproc_per_node=2 scripts/rlgames_train.py headless=True task=STAR multi_gpu=True
 ```
 
-## Tasks
-
-Source code for tasks can be found in `SurgicalGym/surgicalgym`. 
-
-Each task follows the frameworks provided in `omni.isaac.core` and `omni.isaac.gym` in Isaac Sim.
-
-Refer to [docs/framework.md](docs/framework.md) for how to create your own tasks.
-
-Full details on each of the tasks available can be found in the [RL examples documentation](docs/rl_examples.md).
 
