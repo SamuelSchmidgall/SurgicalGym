@@ -45,7 +45,7 @@ Follow the Isaac Sim [documentation](https://docs.omniverse.nvidia.com/app_isaac
 
 *Examples in this repository rely on features from the most recent Isaac Sim release. Please make sure to update any existing Isaac Sim build to the latest release version, 2022.2.1, to ensure examples work as expected.*
 
-Once installed, this repository can be used as a python module, `SurgicalGym`, with the python executable provided in Isaac Sim.
+Once installed, this repository can be used as a python module, `SurgicalGym`, with the python executable provided from the Isaac Sim installation.
 
 To install `SurgicalGym`, first clone this repository:
 
@@ -76,7 +76,7 @@ PYTHON_PATH -m pip install -e .
 To train your first policy, run:
 
 ```bash
-PYTHON_PATH scripts/rlgames_train.py task=ECM
+PYTHON_PATH scripts/rlgames_train.py task=STAR
 ```
 
 You should see an Isaac Sim window pop up. Once Isaac Sim initialization completes, the ECM target reaching scene will be constructed and simulation will start running automatically. The process will terminate once training finishes.
@@ -86,7 +86,7 @@ Note that by default, we show a Viewport window with rendering, which slows down
 To achieve maximum performance, you can launch training in `headless` mode as follows:
 
 ```bash
-PYTHON_PATH scripts/rlgames_train.py task=ECM headless=True
+PYTHON_PATH scripts/rlgames_train.py task=STAR headless=True
 ```
 
 #### A Note on the Startup Time of the Simulation
@@ -103,7 +103,7 @@ defaults to the task name, but can also be overridden via the `experiment` argum
 To load a trained checkpoint and continue training, use the `checkpoint` argument:
 
 ```bash
-PYTHON_PATH scripts/rlgames_train.py task=ECM checkpoint=runs/ECM/nn/ECM.pth
+PYTHON_PATH scripts/rlgames_train.py task=STAR checkpoint=runs/STAR/nn/STAR.pth
 ```
 
 To load a trained checkpoint and only perform inference (no training), pass `test=True` 
@@ -111,7 +111,7 @@ as an argument, along with the checkpoint name. To avoid rendering overhead, you
 also want to run with fewer environments using `num_envs=64`:
 
 ```bash
-PYTHON_PATH scripts/rlgames_train.py task=ECM checkpoint=runs/ECM/nn/ECM.pth test=True num_envs=64
+PYTHON_PATH scripts/rlgames_train.py task=STAR checkpoint=runs/STAR/nn/STAR.pth test=True num_envs=64
 ```
 
 
@@ -122,7 +122,7 @@ We use [Hydra](https://hydra.cc/docs/intro/) to manage the config.
  
 Common arguments for the training scripts are:
 
-* `task=TASK` - Selects which task to use. Any of `@FILL THIS IN ENV1`, `@FILL THIS IN ENV2...` (these correspond to the config for each environment in the folder `surgicalgym/cfg/task`)
+* `task=TASK` - Selects which task to use. Any of `@PSM`, `@ECM`, `@STAR` (these correspond to the config for each environment in the folder `surgicalgym/cfg/task`)
 * `train=TRAIN` - Selects which training config to use. Will automatically default to the correct config for the environment (ie. `<TASK>PPO`).
 * `num_envs=NUM_ENVS` - Selects the number of environments to use (overriding the default number of environments set in the task config).
 * `seed=SEED` - Sets a seed value for randomization, and overrides the default seed in the task config
@@ -164,7 +164,7 @@ PYTHON_PATH -m tensorboard.main --logdir runs/EXPERIMENT_NAME/summaries
 
 To train with multiple GPUs, use the following command, where `--proc_per_node` represents the number of available GPUs:
 ```bash
-PYTHON_PATH -m torch.distributed.run --nnodes=1 --nproc_per_node=2 scripts/rlgames_train.py headless=True task=Ant multi_gpu=True
+PYTHON_PATH -m torch.distributed.run --nnodes=1 --nproc_per_node=2 scripts/rlgames_train.py headless=True task=STAR multi_gpu=True
 ```
 
 ## Tasks
