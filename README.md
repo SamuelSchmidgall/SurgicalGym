@@ -98,6 +98,14 @@ PYTHON_PATH -m pip install -e .
 
 ## Running trainings and examples
 
+As the first step we are going to make sure your visualization works and your libraries were installed properly. To do this, we will just run random behavior.
+
+```bash
+PYTHON_PATH scripts/random_policy.py task=STAR
+```
+
+You should see the STAR robot shaking around. If so you're ready to start training!
+
 *Note: all commands should be executed from the location `SurgicalGym/surgicalgym`.*
 
 To train your first policy, run:
@@ -245,5 +253,10 @@ if __name__ == '__main__':
     parse_hydra_configs()
 ```
 
+Now you can run this code as follows:
+
+```bash
+PYTHON_PATH FILE_NAME.py task=STAR
+```
 
 
