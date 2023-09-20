@@ -75,6 +75,15 @@ Install `SurgicalGym` as a python module for `PYTHON_PATH`:
 PYTHON_PATH -m pip install -e .
 ```
 
+## Some code to copy and paste
+
+The primary trainings for this repo are done through scripts that are written for you. However, I always love seeing code that I can copy and paste in a github README, so here you go.
+
+### Visualize STAR with random actions
+```python
+Code here
+```
+
 ## Running examples
 
 *Note: all commands should be executed from the location `SurgicalGym/surgicalgym`.*
