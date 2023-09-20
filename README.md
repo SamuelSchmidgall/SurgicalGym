@@ -13,6 +13,17 @@ This repository contains Surgical Robotic Learning tasks that can be run with th
 
 ----------------------
 
+### Table of contents
+
+[Environments](#environments)  
+[Installation](#installation) 
+[Running trainings and examples](#running-trainings-and-examples) 
+[Some code you can copy and paste](#some-code-you-can-copy-and-paste) 
+
+
+----------------------
+
+
 ## Environments
 
 ### The da Vinci System
@@ -182,7 +193,7 @@ PYTHON_PATH -m torch.distributed.run --nnodes=1 --nproc_per_node=2 scripts/rlgam
 ```
 
 ----------------------
-## Some code to copy and paste
+## Some code you can copy and paste
 
 The primary trainings for this repo are done through scripts that are written for you. However, I always love seeing some simple code that I can copy and paste into my IDE in a github README. So, here you go.
 
