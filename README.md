@@ -39,9 +39,14 @@ The Smart Tissue Autonomous Robot (STAR) is a robot designed by a researchers at
 
 ## Installation
 
+### [Step 1]
+
 Follow the Isaac Sim [documentation](https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/install_basic.html) to install the latest Isaac Sim release. 
 
 *Examples in this repository rely on features from the most recent Isaac Sim release. Please make sure to update any existing Isaac Sim build to the latest release version, 2022.2.1, to ensure examples work as expected.*
+
+
+### [Step 2]
 
 Once installed, this repository can be used as a python module, `SurgicalGym`, with the python executable provided from the Isaac Sim installation.
 
@@ -61,13 +66,16 @@ For Windows: doskey PYTHON_PATH=C:\Users\user\AppData\Local\ov\pkg\isaac_sim-*\p
 For IsaacSim Docker: alias PYTHON_PATH=/isaac-sim/python.sh
 ```
 
+
+### [Step 3]
+
 Install `SurgicalGym` as a python module for `PYTHON_PATH`:
 
 ```bash
 PYTHON_PATH -m pip install -e .
 ```
 
-### Running the examples
+## Running examples
 
 *Note: all commands should be executed from the location `SurgicalGym/surgicalgym`.*
 
