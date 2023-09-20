@@ -75,57 +75,6 @@ Install `SurgicalGym` as a python module for `PYTHON_PATH`:
 PYTHON_PATH -m pip install -e .
 ```
 
-## Some code to copy and paste
-
-The primary trainings for this repo are done through scripts that are written for you. However, I always love seeing some simple code that I can copy and paste into my IDE in a github README. So, here you go.
-
-#### Visualize STAR with random actions
-```python
-import torch
-import hydra
-import numpy as np
-from omegaconf import DictConfig
-from surgicalgym.utils.hydra_cfg.hydra_utils import *
-from surgicalgym.utils.task_util import initialize_task
-from surgicalgym.envs.vec_env_rlgames import VecEnvRLGames
-from surgicalgym.utils.hydra_cfg.reformat import omegaconf_to_dict, print_dict
-
-@hydra.main(config_name="config", config_path="../cfg")
-def parse_hydra_configs(cfg: DictConfig):
-    cfg_dict = omegaconf_to_dict(cfg)
-    print_dict(cfg_dict)
-    headless = cfg.headless
-    render = not headless
-    enable_viewport = "enable_cameras" in cfg.task.sim and cfg.task.sim.enable_cameras
-
-    env = VecEnvRLGames(headless=headless, sim_device=cfg.device_id, enable_livestream=cfg.enable_livestream, enable_viewport=enable_viewport)
-    # sets seed. if seed is -1 will pick a random one
-    from omni.isaac.core.utils.torch.maths import set_seed
-    cfg.seed = set_seed(cfg.seed, torch_deterministic=cfg.torch_deterministic)
-    cfg_dict['seed'] = cfg.seed
-    task = initialize_task(cfg_dict, env)
-
-    while env._simulation_app.is_running():
-        if env._world.is_playing():
-            if env._world.current_time_step_index == 0:
-                env._world.reset(soft=True)
-            # some random action
-            actions = torch.tensor(np.array([env.action_space.sample() for _ in range(env.num_envs)]), device=task.rl_device)
-            # apply action to physics environment
-            env._task.pre_physics_step(actions)
-            # forward simulate physics
-            env._world.step(render=render)
-            # post process physics
-            env._task.post_physics_step()
-            env.sim_frame_count += 1
-        else:
-            env._world.step(render=render)
-    env._simulation_app.close()
-
-if __name__ == '__main__':
-    parse_hydra_configs()
-```
-
 ## Running trainings and examples
 
 *Note: all commands should be executed from the location `SurgicalGym/surgicalgym`.*
@@ -222,5 +171,58 @@ To train with multiple GPUs, use the following command, where `--proc_per_node` 
 ```bash
 PYTHON_PATH -m torch.distributed.run --nnodes=1 --nproc_per_node=2 scripts/rlgames_train.py headless=True task=STAR multi_gpu=True
 ```
+
+
+## Some code to copy and paste
+
+The primary trainings for this repo are done through scripts that are written for you. However, I always love seeing some simple code that I can copy and paste into my IDE in a github README. So, here you go.
+
+#### Visualize STAR with random actions
+```python
+import torch
+import hydra
+import numpy as np
+from omegaconf import DictConfig
+from surgicalgym.utils.hydra_cfg.hydra_utils import *
+from surgicalgym.utils.task_util import initialize_task
+from surgicalgym.envs.vec_env_rlgames import VecEnvRLGames
+from surgicalgym.utils.hydra_cfg.reformat import omegaconf_to_dict, print_dict
+
+@hydra.main(config_name="config", config_path="../cfg")
+def parse_hydra_configs(cfg: DictConfig):
+    cfg_dict = omegaconf_to_dict(cfg)
+    print_dict(cfg_dict)
+    headless = cfg.headless
+    render = not headless
+    enable_viewport = "enable_cameras" in cfg.task.sim and cfg.task.sim.enable_cameras
+
+    env = VecEnvRLGames(headless=headless, sim_device=cfg.device_id, enable_livestream=cfg.enable_livestream, enable_viewport=enable_viewport)
+    # sets seed. if seed is -1 will pick a random one
+    from omni.isaac.core.utils.torch.maths import set_seed
+    cfg.seed = set_seed(cfg.seed, torch_deterministic=cfg.torch_deterministic)
+    cfg_dict['seed'] = cfg.seed
+    task = initialize_task(cfg_dict, env)
+
+    while env._simulation_app.is_running():
+        if env._world.is_playing():
+            if env._world.current_time_step_index == 0:
+                env._world.reset(soft=True)
+            # some random action
+            actions = torch.tensor(np.array([env.action_space.sample() for _ in range(env.num_envs)]), device=task.rl_device)
+            # apply action to physics environment
+            env._task.pre_physics_step(actions)
+            # forward simulate physics
+            env._world.step(render=render)
+            # post process physics
+            env._task.post_physics_step()
+            env.sim_frame_count += 1
+        else:
+            env._world.step(render=render)
+    env._simulation_app.close()
+
+if __name__ == '__main__':
+    parse_hydra_configs()
+```
+
 
 
