@@ -2,7 +2,7 @@
 
 <img src="media/mainfigure.jpg" width="80%" height="80%"/>
 
-As the field of medical surgery evolves, one of its most significant breakthroughs is the incorporation of robotic assistance. These surgical robots, operated by surgeons from a control station, have enabled unparalleled precision during surgical procedures. Although robots assist in over a million surgical operations annually, their operation remains human-dependent, lacking autonomy. The pursuit of automation in surgical robots promises increased efficiency, reduced surgeon fatigue, and more minimally-invasive procedures. Recent applications of Reinforcement Learning (RL) for control strategies indicate a bright future for automated surgery. The robotics domain has been recently revolutionized through the use of GPU-based physics simulators, accessing magnitudes more data than their CPU counterparts. Toward this, we introduce  **Surgical Gym:** an open-source platform optimized for GPU capabilities which runs up to 7000x faster than previous surgical simulators.**
+As the field of surgery evolves, one of its most significant breakthroughs is the incorporation of robotic assistance. These surgical robots, operated by surgeons from a control station, have enabled less invasive surgical procedures with better outcomes. Although robots assist in over a million surgical operations annually, their operation remains human-dependent, lacking autonomy. The pursuit of automation in surgical robots promises increased efficiency, reduced surgeon fatigue, and more minimally-invasive procedures. Recent applications of Reinforcement Learning (RL) for control strategies indicate a bright future for automated surgery. The robotics domain has been recently revolutionized through the use of GPU-based physics simulators, accessing magnitudes more data than their CPU counterparts. Toward this, we introduce  **Surgical Gym:** an open-source platform optimized for GPU capabilities which runs up to 7000x faster than previous surgical simulators.**
 
 
 
@@ -14,12 +14,13 @@ This repository contains Surgical Robotic Learning tasks that can be run with th
 
 ### The da Vinci System
 
-The da Vinci Surgical System is a robotic surgical system designed to facilitate complex surgery using a minimally invasive. 
+The da Vinci Surgical System is a robotic surgical system designed to facilitate complex surgery through a set of multiple end-effectors that have interchangable attachments. 
 
+The system operates through an interface with the **Master Tool Manipulator (MTM)**, which serves as the control center for the surgeon to direct surgical actions. Through the MTM's handles or joysticks, the surgeon's movements are captured and translated into corresponding motions of the **Patient Side Manipulators (PSMs)**, which are attachments responsible for gripping tissue. These PSMs carry out the movements dictated by the surgeon via the MTM, mimicking the surgeon's hand motions, allowing for very accurate and less invasive operations. The PSMs are flexible, multi-jointed instruments capable of holding and manipulating tissue, adjusting to the unique anatomy and requirements of each procedure.
 
-<!--img src="media/davinci.jpeg" height="35%" width="35%"/-->
+### Patient Side Manipulator (PSM)
 
-The system operates through an interface with the **Master Tool Manipulator (MTM)**, which serves as the control center for the surgeon to direct surgical actions. Through the MTM's handles or joysticks, the surgeon's movements are captured and translated into corresponding motions of the **Patient Side Manipulators (PSMs)**, which are robotic arm attachments responsible for performing the surgery. These PSMs carry out the movements dictated by the surgeon via the MTM, mimicking the surgeon's hand motions with extraordinary precision, allowing for very accurate and less invasive operations. The PSMs are flexible, multi-jointed instruments capable of holding and manipulating surgical tools, adjusting to the unique anatomy and requirements of each procedure.
+<img src="media/psm_target_reach.gif" width="500" height="250"/>
 
 A third component of the da Vinci system is the **Endoscopic Camera Manipulator (ECM)**. The ECM is another robotic arm attachment that holds and controls the movement of a stereo endoscope, a special camera that provides a high-definition, three-dimensional view of the surgical field. This allows the surgeon, from the control console, to have a detailed and magnified view of the area being operated on, significantly improving precision and control during the surgical procedure.
 
@@ -29,13 +30,10 @@ A third component of the da Vinci system is the **Endoscopic Camera Manipulator 
 <img src="media/ecm_target_reach.gif" width="500" height="250"/>
 
 
-### Patient Side Manipulator (PSM)
-
-<img src="media/psm_target_reach.gif" width="500" height="250"/>
 
 ### Smart Tissue Autonomous Robot (STAR)
 
-The Smart Tissue Autonomous Robot (STAR) is a robot designed by a team of Johns Hopkins University researchers to perform laparoscopic surgery autonomously.
+The Smart Tissue Autonomous Robot (STAR) is a robot designed by a researchers at Johns Hopkins University and the Children's National Hosptial to perform laparoscopic surgery autonomously. The STAR robot has been used for a variety of autonomous surgical procedures, most notably, the first autonomous laparoscopic surgery for intestinal anastomosis (reconnection of two tubular structures such as blood vessels or intestines). The STAR performed the procedure in four different animals, producing better results than humans executing the same procedure.
 
 <img src="media/STAR_track.gif" width="400" height="250"/>
 
