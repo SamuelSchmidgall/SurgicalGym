@@ -10,6 +10,9 @@ As the field of surgery evolves, one of its most significant breakthroughs is th
 
 This repository contains Surgical Robotic Learning tasks that can be run with the latest release of [Isaac Sim](https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/overview.html). Reinforcement Learning (RL) examples are trained using PPO from [rl_games](https://github.com/Denys88/rl_games) library and examples are built on top of Isaac Sim's `omni.isaac.core` and `omni.isaac.gym` frameworks. The environment design structure and some of the README instructions inherit from [OmniIsaacGymEnvs](https://github.com/NVIDIA-Omniverse/OmniIsaacGymEnvs).
 
+
+----------------------
+
 ## Environments
 
 ### The da Vinci System
@@ -36,6 +39,9 @@ A third component of the da Vinci system is the **Endoscopic Camera Manipulator 
 The Smart Tissue Autonomous Robot (STAR) is a robot designed by a researchers at Johns Hopkins University and the Children's National Hosptial to perform laparoscopic surgery autonomously. The STAR robot has been used for a variety of autonomous surgical procedures, most notably, the first autonomous laparoscopic surgery for intestinal anastomosis (reconnection of two tubular structures such as blood vessels or intestines). The STAR performed the procedure in four different animals, producing better results than humans executing the same procedure.
 
 <img src="media/STAR_track.gif" width="400" height="250"/>
+
+
+----------------------
 
 ## Installation
 
@@ -74,6 +80,9 @@ Install `SurgicalGym` as a python module for `PYTHON_PATH`:
 ```bash
 PYTHON_PATH -m pip install -e .
 ```
+
+
+----------------------
 
 ## Running trainings and examples
 
@@ -172,7 +181,7 @@ To train with multiple GPUs, use the following command, where `--proc_per_node` 
 PYTHON_PATH -m torch.distributed.run --nnodes=1 --nproc_per_node=2 scripts/rlgames_train.py headless=True task=STAR multi_gpu=True
 ```
 
-
+----------------------
 ## Some code to copy and paste
 
 The primary trainings for this repo are done through scripts that are written for you. However, I always love seeing some simple code that I can copy and paste into my IDE in a github README. So, here you go.
