@@ -15,10 +15,10 @@ This repository contains Surgical Robotic Learning tasks that can be run with th
 
 ### Table of contents
 
-[Environments](#environments)  
-[Installation](#installation) 
-[Running trainings and examples](#running-trainings-and-examples) 
-[Some code you can copy and paste](#some-code-you-can-copy-and-paste) 
+#### [Environments](#environments)  
+#### [Installation](#installation) 
+#### [Running trainings and examples](#running-trainings-and-examples) 
+#### [Some code you can copy and paste](#some-code-you-can-copy-and-paste) 
 
 
 ----------------------
