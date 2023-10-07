@@ -1,4 +1,4 @@
-# Surgical Gym: A high-performance GPU-based platform for surgical robot learning 
+# Surgical Gym: A high-performance GPU-based platform for surgical robot learning (work in progress)
 
 <img src="media/mainfigure.jpg" width="80%" height="80%"/>
 
