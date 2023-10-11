@@ -116,8 +116,6 @@ PYTHON_PATH scripts/rlgames_train.py task=STAR
 
 You should see an Isaac Sim window pop up. Once Isaac Sim initialization completes, the ECM target reaching scene will be constructed and simulation will start running automatically. The process will terminate once training finishes.
 
-Note that by default, we show a Viewport window with rendering, which slows down training. You can choose to close the Viewport window during training for better performance. The Viewport window can be re-enabled by selecting `Window > Viewport` from the top menu bar.
-
 To achieve maximum performance, you can launch training in `headless` mode as follows:
 
 ```bash
@@ -126,8 +124,8 @@ PYTHON_PATH scripts/rlgames_train.py task=STAR headless=True
 
 #### A Note on the Startup Time of the Simulation
 
-Some of the examples could take a few minutes to load because the startup time scales based on the number of environments. The startup time will continually
-be optimized in future releases.
+Some of the examples could take a **few minutes** to load because the startup time scales based on the number of environments. The startup time will continually
+be optimized in future releases of Isaac Gym (and hence Surgical Gym).
 
 
 ### Loading trained models // Checkpoints
