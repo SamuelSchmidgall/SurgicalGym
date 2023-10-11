@@ -24,6 +24,7 @@ This repository contains Surgical Robotic Learning tasks that can be run with th
      *  [Hydra Notes](#hydra-notes)
      *  [Training with Multiple GPUs](#training-with-multiple-gpus)
    * [Some code you can copy and paste](#some-code-you-can-copy-and-paste) 
+   * [Citation] (#citation)
 <!--te-->
 
 ----------------------
@@ -261,4 +262,16 @@ Now you can run this code as follows:
 PYTHON_PATH FILE_NAME.py task=STAR
 ```
 
+## Citation
 
+If you find **Surgical Gym:** useful in your work please cite the following source:
+
+[Schmidgall, Samuel, Krieger, Axel, and Eshraghian, Jason. "Surgical Gym: A high-performance GPU-based platform for reinforcement learning with surgical robots." arXiv preprint arXiv:2310.04676 (2023).](https://arxiv.org/abs/2310.04676)
+
+```bibtex
+@article{schmidgall2023surgical,
+  title={Surgical Gym: A high-performance GPU-based platform for reinforcement learning with surgical robots},
+  author={Schmidgall, Samuel and Krieger, Axel and Eshraghian, Jason},
+  journal={arXiv preprint arXiv:2310.04676},
+  year={2023}
+}
