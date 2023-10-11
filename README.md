@@ -264,7 +264,7 @@ PYTHON_PATH FILE_NAME.py task=STAR
 
 ## Citation
 
-If you find **Surgical Gym:** useful in your work please cite the following source:
+If you find **Surgical Gym** useful in your work please cite the following source:
 
 [Schmidgall, Samuel, Krieger, Axel, and Eshraghian, Jason. "Surgical Gym: A high-performance GPU-based platform for reinforcement learning with surgical robots." arXiv preprint arXiv:2310.04676 (2023).](https://arxiv.org/abs/2310.04676)
 
