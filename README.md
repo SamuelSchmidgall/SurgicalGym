@@ -24,7 +24,7 @@ This repository contains Surgical Robotic Learning tasks that can be run with th
      *  [Hydra Notes](#hydra-notes)
      *  [Training with Multiple GPUs](#training-with-multiple-gpus)
    * [Some code you can copy and paste](#some-code-you-can-copy-and-paste) 
-   * [Citation] (#citation)
+   * [Citation](#citation)
 <!--te-->
 
 ----------------------
