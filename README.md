@@ -18,7 +18,11 @@ This repository contains Surgical Robotic Learning tasks that can be run with th
 <!--ts-->
    * [Environments](#environments)  
    * [Installation](#installation) 
-   * [Running trainings and examples](#running-trainings-and-examples) 
+   * [Running trainings and examples](#running-trainings-and-examples)
+     *  [Loading trained models](#loading-trained-models)
+     *  [Configuration and command line arguments](#configuration-and-command-line-arguments)
+     *  [Hydra Notes](#hydra-notes)
+     *  [Training with Multiple GPUs](#training-with-multiple-gpus)
    * [Some code you can copy and paste](#some-code-you-can-copy-and-paste) 
 <!--te-->
 
@@ -128,7 +132,7 @@ Some of the examples could take a **few minutes** to load because the startup ti
 be optimized in future releases of Isaac Gym (and hence Surgical Gym).
 
 
-### Loading trained models // Checkpoints
+### Loading trained models
 
 Checkpoints are saved in the folder `runs/EXPERIMENT_NAME/nn` where `EXPERIMENT_NAME` 
 defaults to the task name, but can also be overridden via the `experiment` argument.
@@ -147,8 +151,8 @@ also want to run with fewer environments using `num_envs=64`:
 PYTHON_PATH scripts/rlgames_train.py task=STAR checkpoint=runs/STAR/nn/STAR.pth test=True num_envs=64
 ```
 
-
 When running with a pre-trained checkpoint for the first time, we will automatically download the checkpoint file to `surgicalgym/checkpoints`. For subsequent runs, we will re-use the file that has already been downloaded, and will not overwrite existing checkpoints with the same name in the `checkpoints` folder.
+
 ### Configuration and command line arguments
 
 We use [Hydra](https://hydra.cc/docs/intro/) to manage the config.
