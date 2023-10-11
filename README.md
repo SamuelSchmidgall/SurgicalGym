@@ -10,6 +10,19 @@ As the field of surgery evolves, one of its most significant breakthroughs is th
 
 This repository contains Surgical Robotic Learning tasks that can be run with the latest release of [Isaac Sim](https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/overview.html). Reinforcement Learning (RL) examples are trained using PPO from [rl_games](https://github.com/Denys88/rl_games) library and examples are built on top of Isaac Sim's `omni.isaac.core` and `omni.isaac.gym` frameworks. The environment design structure and some of the README instructions inherit from [OmniIsaacGymEnvs](https://github.com/NVIDIA-Omniverse/OmniIsaacGymEnvs).
 
+If you find **Surgical Gym** useful in your work please cite the following source:
+
+[Schmidgall, Samuel, Krieger, Axel, and Eshraghian, Jason. "Surgical Gym: A high-performance GPU-based platform for reinforcement learning with surgical robots." arXiv preprint arXiv:2310.04676 (2023).](https://arxiv.org/abs/2310.04676)
+
+```bibtex
+@article{schmidgall2023surgical,
+  title={Surgical Gym: A high-performance GPU-based platform for reinforcement learning with surgical robots},
+  author={Schmidgall, Samuel and Krieger, Axel and Eshraghian, Jason},
+  journal={arXiv preprint arXiv:2310.04676},
+  year={2023}
+}
+```
+
 
 ----------------------
 
@@ -24,7 +37,6 @@ This repository contains Surgical Robotic Learning tasks that can be run with th
      *  [Hydra Notes](#hydra-notes)
      *  [Training with Multiple GPUs](#training-with-multiple-gpus)
    * [Some code you can copy and paste](#some-code-you-can-copy-and-paste) 
-   * [Citation](#citation)
 <!--te-->
 
 ----------------------
@@ -262,16 +274,3 @@ Now you can run this code as follows:
 PYTHON_PATH FILE_NAME.py task=STAR
 ```
 
-## Citation
-
-If you find **Surgical Gym** useful in your work please cite the following source:
-
-[Schmidgall, Samuel, Krieger, Axel, and Eshraghian, Jason. "Surgical Gym: A high-performance GPU-based platform for reinforcement learning with surgical robots." arXiv preprint arXiv:2310.04676 (2023).](https://arxiv.org/abs/2310.04676)
-
-```bibtex
-@article{schmidgall2023surgical,
-  title={Surgical Gym: A high-performance GPU-based platform for reinforcement learning with surgical robots},
-  author={Schmidgall, Samuel and Krieger, Axel and Eshraghian, Jason},
-  journal={arXiv preprint arXiv:2310.04676},
-  year={2023}
-}
