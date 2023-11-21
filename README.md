@@ -91,7 +91,7 @@ To install `SurgicalGym`, first clone this repository:
 git clone https://github.com/SamuelSchmidgall/SurgicalGym.git
 ```
 
-Once cloned, locate the [python executable in Isaac Sim](https://docs.omniverse.nvidia.com/app_isaacsim/app_isaacsim/install_python.html). By default, this should be `python.sh`. We will refer to this path as `PYTHON_PATH`.
+Once cloned, locate the [python executable in Isaac Sim](https://docs.omniverse.nvidia.com/isaacsim/latest/installation/install_workstation.html). By default, this should be `python.sh`. We will refer to this path as `PYTHON_PATH`.
 
 To set a `PYTHON_PATH` variable in the terminal that links to the python executable, we can run a command that resembles the following. Make sure to update the paths to your local path.
 
