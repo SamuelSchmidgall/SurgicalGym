@@ -65,7 +65,7 @@ A third component of the da Vinci system is the **Endoscopic Camera Manipulator 
 
 ### Smart Tissue Autonomous Robot (STAR)
 
-The Smart Tissue Autonomous Robot (STAR) is a robot designed by a researchers at Johns Hopkins University and the Children's National Hosptial to perform laparoscopic surgery autonomously. The STAR robot has been used for a variety of autonomous surgical procedures, most notably, the first autonomous laparoscopic surgery for intestinal anastomosis (reconnection of two tubular structures such as blood vessels or intestines). The STAR performed the procedure in four different animals, producing better results than humans executing the same procedure.
+The Smart Tissue Autonomous Robot (STAR) is a robot designed at Children's National Hosptial to perform laparoscopic surgery autonomously. The STAR robot has been used for a variety of autonomous surgical procedures, most notably, the first autonomous laparoscopic surgery for intestinal anastomosis (reconnection of two tubular structures such as blood vessels or intestines). The STAR performed the procedure in four different animals, producing better results than humans executing the same procedure.
 
 <img src="media/STAR_track.gif" width="400" height="250"/>
 
