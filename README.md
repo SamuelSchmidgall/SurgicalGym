@@ -2,9 +2,9 @@
 
 <img src="media/mainfigure.jpg" width="80%" height="80%"/>
 
-As the field of surgery evolves, one of its greatest advancements is the incorporation of robotic assistance. Surgical robots, operated by surgeons from a control station, have enabled less invasive surgical procedures with reduced effect by hand tremors. Although robots assist in over a million surgical operations annually, their operation remains human-dependent, lacking task-autonomy. Greater autonomy in surgical robots promises increased efficiency, reduced surgeon fatigue, and more minimally-invasive procedures. Recent applications of Reinforcement Learning (RL) for control strategies indicate a potential for automated surgery. Training robotic systems through reinforcement learning has been recently made easiser through the use of GPU-based physics simulators, accessing magnitudes more data than their CPU counterparts. Toward this, we introduce  **Surgical Gym:** an open-source platform optimized for GPU capabilities which runs up to 7000x faster than previous surgical simulators.**
+As the field of surgery progresses, one of its greatest advancements is the incorporation of robotic assistance. Surgical robots, operated by surgeons from a control station, have enabled less invasive surgical procedures with reduced effect by hand tremors. Although robots assist in over a million surgical operations annually, their operation remains human-dependent, lacking task-autonomy. Greater autonomy in surgical robots promises increased efficiency, reduced surgeon fatigue, and more minimally-invasive procedures. Recent applications of Reinforcement Learning (RL) for control strategies indicate a potential for automated surgery. Training robotic systems through reinforcement learning has been recently made easiser through the use of GPU-based physics simulators, accessing magnitudes more data than their CPU counterparts. Toward this, we introduce  **Surgical Gym:** an open-source platform optimized for GPU capabilities which runs up to 7000x faster than previous surgical simulators.**
 
-
+### Accepted as an ICRA 2024 paper 🎉, please drop by!  
 
 ## About this repository
 
